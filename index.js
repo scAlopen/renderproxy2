@@ -1,5 +1,4 @@
-const express = require('express');
-const { createBareServer } = require('@tomphttp/bare-server-node');
+const express = require('express')
 const { uvPath } = require('@titaniumnetwork-dev/ultraviolet');
 const uv = require('@titaniumnetwork-dev/ultraviolet')();
 
