@@ -2,7 +2,7 @@
 	"name": "@titaniumnetwork-dev/ultraviolet",
 	"version": "3.2.10",
 	"description": "Highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers and more!",
-	"main": "lib/index.cjs",
+	"main": "index.js",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -15,7 +15,8 @@
 		"client.d.ts"
 	],
 	"type": "module",
-	"scripts": {
+	"scripts": {  
+    		"start": "node index.js"
 		"build": "node build.js",
 		"dev": "node build.js --dev",
 		"prepack": "npm run build",
@@ -40,9 +41,15 @@
 		"meriyah": "^6.0.5",
 		"parse5": "^7.2.1",
 		"set-cookie-parser": "^2.7.1"
+		 "express": "^4.18.2",
+    "@tomphttp/bare-server-node": "^1.2.0",
+    "@ultraviolet/core": "^1.4.5"
+  
 	},
-	"scripts": {
-  "start": "node index.js",
- 
+{
+
+
+
+
 }
 
