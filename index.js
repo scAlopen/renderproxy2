@@ -1,20 +1,17 @@
-
 const express = require('express');
-const { createBareServer } = require('@titaniumnetwork-dev/ultraviolet');
-const uvPath = __dirname + '/node_modules/@titaniumnetwork-dev/ultraviolet';
+const { createBareServer } = require('@tomphttp/bare-server-node');
+const { uvPath } = require('@titaniumnetwork-dev/ultraviolet');
+const uv = require('@titaniumnetwork-dev/ultraviolet')();
 
 const app = express();
 const bare = createBareServer('/bare/');
 
-app.use('/uv/', express.static(uvPath + '/public'));
-app.use('/uv/service/', require(uvPath + '/server'));
-app.use('/bare/', bare);
-
-app.get('/', (req, res) => {
-  res.send('<h1>Ultraviolet Proxy is Running</h1><p><a href="/uv/">Launch UV</a></p>');
-});
-
+app.use(express.static(uvPath));
+app.use((req, res) => uv(req, res));
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Ultraviolet proxy is running on port ${PORT}`);
+
+const server = app.listen(PORT, () => {
+  console.log(`UV proxy listening on port ${PORT}`);
 });
+
+bare.attach(server);
