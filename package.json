@@ -45,11 +45,6 @@
     "@tomphttp/bare-server-node": "^1.2.0",
     "@ultraviolet/core": "^1.4.5"
   
-	},
-{
-
-
-
-
+	}
 }
 
