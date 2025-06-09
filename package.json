@@ -16,7 +16,7 @@
 	],
 	"type": "module",
 	"scripts": {  
-    		"start": "node index.js"
+    		"start": "node index.js",
 		"build": "node build.js",
 		"dev": "node build.js --dev",
 		"prepack": "npm run build",
