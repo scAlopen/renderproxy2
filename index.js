@@ -1,19 +1,28 @@
-const express = require("express");
-const http = require("http");
-const { createBareServer } = require("@tomphttp/bare-server-node");
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-const bare = createBareServer("/bare/");
+const PORT = process.env.PORT || 3000;
 
-app.use((req, res, next) => {
-  if (bare.shouldRoute(req)) return bare.routeRequest(req, res);
-  next();
+app.use('/', (req, res, next) => {
+  const target = req.query.url;
+  if (!target || !/^https?:\/\//.test(target)) {
+    return res.send(`
+      <h2>Simple UV-Style Proxy</h2>
+      <form method="GET">
+        <input name="url" placeholder="https://example.com" required style="width:300px"/>
+        <button>Go</button>
+      </form>
+      <p>Enter a complete http:// or https:// URL</p>
+    `);
+  }
+
+  return createProxyMiddleware({
+    target,
+    changeOrigin: true,
+    secure: false,
+    pathRewrite: (path, req) => req.originalUrl.replace('?url=' + encodeURIComponent(target), '')
+  })(req, res, next);
 });
 
-app.use("/", express.static("ultraviolet-static"));
-
-const server = http.createServer(app);
-bare.attach(server);
-
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`UV proxy running on ${PORT}`));
+app.listen(PORT, () => console.log(`Proxy running on port ${PORT}`));
